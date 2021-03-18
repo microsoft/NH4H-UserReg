@@ -64,7 +64,7 @@ class App extends Component {
         <div >
         {!this.state.loggedin?
               <Button onClick={this.signin} color='linkedin'>
-              <Icon name='linkedin' /> Sign In with Microsoft
+              <Icon name='microsoft' /> Sign In with Microsoft
             </Button>
              
               :<div>
