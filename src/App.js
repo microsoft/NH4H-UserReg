@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Icon } from 'semantic-ui-react'
-import nh4h from './apis/nh4h';
-import RegForm from "./components/regform"
 import * as Msal from "msal";
+import { Button, Icon } from 'semantic-ui-react'
 import User from './apis/user';
+import RegForm from "./components/regform"
+import LoginForm from "./components/loginform"
+import UnregForm from  "./components/unregform"
+
+
+
 
 class App extends Component {
   constructor(props){
@@ -20,7 +24,6 @@ class App extends Component {
       msalInstance: msalI,
       user: new User(),
       loggedin: false,
-      finishedRegister:false,
     }
   }
 
@@ -52,7 +55,14 @@ class App extends Component {
         // handle error
       });
   } 
-
+  unregister=()=>{
+    let nUser=this.state.user;
+    nUser.active=false;
+    this.state.user.updateUser()
+    .then(()=>{
+      this.setState({user:nUser});
+    });
+  }
   updateUser=(newUser)=>{
     let nUser=this.state.user;
     nUser.email=newUser.email;
@@ -60,10 +70,10 @@ class App extends Component {
     nUser.displayname=newUser.displayname;
     nUser.active=newUser.active;
     nUser.role=newUser.role;
-    this.state.user.updateUser()
+    nUser.updateUser()
     .then(()=>{
-      this.setState({user:nUser,
-       finishedRegister:true
+      this.setState({
+        user:nUser
       });
     });
     
@@ -74,15 +84,14 @@ class App extends Component {
   render() { 
 
     return(
-     
-        <div >
-        {!this.state.loggedin?
-              <Button onClick={this.signin} color='linkedin'>
-              <Icon name='microsoft' /> Sign In with Microsoft
-            </Button>
-             
-              :
-              this.state.finishedRegister?"Done thanks":<RegForm updateUser={this.updateUser} user={this.state.user}/>
+    <div >
+      {!this.state.loggedin?
+        <LoginForm signin={this.signin}/>
+        : 
+          this.state.user.active?
+            <UnregForm unregister={this.unregister} />
+          :
+            <RegForm updateUser={this.updateUser} user={this.state.user}/>
         }
         </div>
       

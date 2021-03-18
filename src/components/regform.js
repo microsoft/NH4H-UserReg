@@ -145,7 +145,6 @@ class RegForm extends React.Component {
         <Loader active inline='centered' />
       </div>:
       <div >
-        {this.props.user.active?<Button >Unregister</Button>:""}
         <Message>Registration Incomplete
           You must fill in this form to be registered.
         </Message>
