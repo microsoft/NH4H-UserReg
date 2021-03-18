@@ -1,6 +1,6 @@
 import React from 'react';
 import User from '../apis/user';
-import {Message, Button, Checkbox, Form, Select, Input } from 'semantic-ui-react'
+import {Loader, Message, Button, Checkbox, Form, Select, Input } from 'semantic-ui-react'
 import { findAllByTestId } from '@testing-library/react';
 
 
@@ -95,17 +95,28 @@ class RegForm extends React.Component {
     this.state={
         email:this.props.user.email,
         optin:this.props.user.optin,
-        name:this.props.user.name,
+        displayname:this.props.user.displayname,
+        role:'Hacker', //this should be updated on one time keys
         submitting:false
 
     };
   }
   
-  handleChange=(e)=> {
-    let tmp={}; 
-    tmp[e.target]=e.value;
-    this.setState(tmp);
-  };
+  handleChange = (event,d) => {
+    const target = event.target;
+    let value = target.type === 'checkbox' ? target.checked : target.value;
+    let name = target.name;
+    if(d){
+      name=d.name;
+      value=d.value;
+    }
+    this.setState({
+      [name]: value
+    });
+  }
+
+
+
 
   handleCheck=(e)=>{
     this.setState({optin:!this.state.optin});
@@ -113,10 +124,13 @@ class RegForm extends React.Component {
 
   handleSubmit=()=>{
     this.setState({submitting:true},()=>{
+      console.log("Username is: "+ this.state.displayname);
       let nUser={
-        name:this.state.name,
+        displayname:this.state.displayname,
         email:this.state.email,
-        optin:this.state.optun
+        optin:this.state.optun,
+        active:true,
+        role:this.state.role
       };
       this.props.updateUser(nUser);
     });
@@ -126,7 +140,10 @@ class RegForm extends React.Component {
   render() {
    
     return(
-      this.state.submitting?<h1>Submitting</h1> :
+      this.state.submitting?
+      <div>
+        <Loader active inline='centered' />
+      </div>:
       <div >
         {this.props.user.active?<Button >Unregister</Button>:""}
         <Message>Registration Incomplete
@@ -140,7 +157,7 @@ class RegForm extends React.Component {
           </Form.Field>
           <Form.Field>
             <label>How would you like your name displayed?</label>
-            <input onChange={ this.handleChange } value={this.state.name} name="name" />
+            <input onChange={ this.handleChange } value={this.state.displayname} name="displayname" />
           </Form.Field>
         
 

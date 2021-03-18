@@ -20,6 +20,7 @@ class App extends Component {
       msalInstance: msalI,
       user: new User(),
       loggedin: false,
+      finishedRegister:false,
     }
   }
 
@@ -53,6 +54,19 @@ class App extends Component {
   } 
 
   updateUser=(newUser)=>{
+    let nUser=this.state.user;
+    nUser.email=newUser.email;
+    nUser.optin=newUser.optin;
+    nUser.displayname=newUser.displayname;
+    nUser.active=newUser.active;
+    nUser.role=newUser.role;
+    this.state.user.updateUser()
+    .then(()=>{
+      this.setState({user:nUser,
+       finishedRegister:true
+      });
+    });
+    
     console.log(newUser);
   }
   
@@ -67,10 +81,9 @@ class App extends Component {
               <Icon name='microsoft' /> Sign In with Microsoft
             </Button>
              
-              :<div>
-              Welcome {this.state.user.email} 
-              <RegForm updateUser={this.updateUser} user={this.state.user}/>
-             </div>}
+              :
+              this.state.finishedRegister?"Done thanks":<RegForm updateUser={this.updateUser} user={this.state.user}/>
+        }
         </div>
       
     );

@@ -14,7 +14,7 @@ class User {
  
  userid;
  email;
- name;
+ displayname;
  role;
  mySkills;
  attemptedPreReg;
@@ -46,7 +46,7 @@ class User {
         this.mySkills= response.data[User.SKILLS];
         this.role=response.data[User.ROLE];
         this.active=response.data['active'];
-        this.name=response.data[User.DISPLAYNAME];
+        this.displayname=response.data[User.DISPLAYNAME];
         this.optin=!response.data[User.OPTOUT];
       }
     });
@@ -61,12 +61,7 @@ isPreregistered(){
 preRegister=()=>{
   //circuit breaker to prevent infinite loops
   if(this.attemptedPreReg) {return;}
-  let body={};
-    body[User.REGEMAIL]=this.email;
-    body[User.TEAMSEMAIL]=this.email;
-    body[User.ROLE]=this.role;
-    body[User.ACTIVE]=this.active;
-    nh4h.post(User.APIURL, body)
+     nh4h.post(User.APIURL, this.getUserBody())
     .then((response)=>{
       if(response.data.returnError){
         this.attemptedPreReg=true;
@@ -81,5 +76,30 @@ preRegister=()=>{
     ;
 }
 
+updateUser=()=>{
+   
+       return    nh4h.put(User.APIURL+this.userid, this.getUserBody())
+          
+          .catch(err => {
+            
+            console.error(err);
+          });
+          
+      
+}
+
+getUserBody=()=>{
+    let body={};
+    body[User.REGEMAIL]=this.email;
+    body[User.TEAMSEMAIL]=this.email;
+    body[User.ROLE]=this.role;
+    body[User.DISPLAYNAME]=this.displayname;
+    body[User.OPTOUT]=this.optin;
+    console.log(this.displayname);
+    console.log(User.DISPLAYNAME);
+    body[User.ACTIVE]=this.active;    
+    return(body);
+
+}
 }
 export default User;
