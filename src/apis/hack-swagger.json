@@ -1,0 +1,1530 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "HackAPIs",
+        "version": "1.0"
+    },
+    "paths": {
+        "/solutions": {
+            "get": {
+                "tags": [
+                    "Db"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/members/{solutionID}": {
+            "get": {
+                "tags": [
+                    "Db"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "solutionID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/member/{SolutionMember}": {
+            "post": {
+                "tags": [
+                    "Db"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "UserID",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "MemberID",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "TeamID",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "Role",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "SolutionMember",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Db"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "UserID",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "MemberID",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "TeamID",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "Role",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "SolutionMember",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/skills": {
+            "get": {
+                "tags": [
+                    "Skills"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Skills"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Skills"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/skills/{id}": {
+            "get": {
+                "tags": [
+                    "Skills"
+                ],
+                "operationId": "GetSkill",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Skills"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Skills"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/solutions": {
+            "get": {
+                "tags": [
+                    "Solution"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Solution"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tblTeams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/solutions/hackers": {
+            "get": {
+                "tags": [
+                    "Solution"
+                ],
+                "operationId": "GetSolutionsHackers",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/solutions/{id}": {
+            "get": {
+                "tags": [
+                    "Solution"
+                ],
+                "operationId": "GetSolution",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Solution"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tblTeams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/solutions/hackers/{id}": {
+            "get": {
+                "tags": [
+                    "Solution"
+                ],
+                "operationId": "GetSolutionHackers",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Solution"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tblTeams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/solutions/skills/{id}": {
+            "get": {
+                "tags": [
+                    "Solution"
+                ],
+                "operationId": "GetSolutionSkills",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Solution"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tblTeams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/solutions/hackers/skills/{id}": {
+            "get": {
+                "tags": [
+                    "Solution"
+                ],
+                "operationId": "GetSolutionHackersSkills",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/survey": {
+            "get": {
+                "tags": [
+                    "Survey"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Survey"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Survey"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/survey/{id}": {
+            "get": {
+                "tags": [
+                    "Survey"
+                ],
+                "operationId": "GetSurvey",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/teams": {
+            "get": {
+                "tags": [
+                    "Teams"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Skills"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teams/domainusers": {
+            "get": {
+                "tags": [
+                    "Teams"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teams/admember": {
+            "post": {
+                "tags": [
+                    "Teams"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/MemberUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teams/{id}": {
+            "delete": {
+                "tags": [
+                    "Teams"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "Id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teams/guestmember": {
+            "post": {
+                "tags": [
+                    "Teams"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/GuestUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teams/teammembers/{teamID}": {
+            "get": {
+                "tags": [
+                    "Teams"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "teamID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teams/teammember": {
+            "post": {
+                "tags": [
+                    "Teams"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/TeamMember"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Teams"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/TeamMember"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teams/channels/{teamID}": {
+            "get": {
+                "tags": [
+                    "Teams"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "teamID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teams/channel": {
+            "get": {
+                "tags": [
+                    "Teams"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/TeamChannel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Teams"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/TeamChannel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Teams"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/TeamChannel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teams/channel/message": {
+            "post": {
+                "tags": [
+                    "Teams"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/TeamChannel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tblUsers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/users/solutions/nousers": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "operationId": "GetUserNoSolutions",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "operationId": "GetUser",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tblUsers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/users/solutions/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "operationId": "GetUserSolutions",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tblUsers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/users/skills/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "operationId": "GetUserSkills",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tblUsers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/users/regemail": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "operationId": "GetUserByRegEmail",
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tblUsers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/users/msemail": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "operationId": "GetUserByMSEmail",
+                "consumes": [
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tblUsers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "GuestUser": {
+            "type": "object",
+            "properties": {
+                "invitedUserEmailAddress": {
+                    "type": "string"
+                },
+                "inviteRedirectUrl": {
+                    "type": "string"
+                },
+                "userId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "active": {
+                    "type": "boolean"
+                },
+                "adUserId": {
+                    "type": "string"
+                }
+            }
+        },
+        "MemberUser": {
+            "type": "object",
+            "properties": {
+                "displayName": {
+                    "type": "string"
+                },
+                "principalName": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "Skills": {
+            "type": "object",
+            "properties": {
+                "skillId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "skillName": {
+                    "type": "string"
+                }
+            }
+        },
+        "Survey": {
+            "type": "object",
+            "properties": {
+                "surveyId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "userId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "pronouns": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "raceEthnicity": {
+                    "type": "string"
+                },
+                "company": {
+                    "type": "string"
+                },
+                "expertise": {
+                    "type": "string"
+                },
+                "student": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "tblSkills": {
+            "type": "object",
+            "properties": {
+                "skillId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "skillName": {
+                    "type": "string"
+                }
+            }
+        },
+        "tblTeamHackers": {
+            "type": "object",
+            "properties": {
+                "teamId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "userId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "isLead": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "tblUsers": {
+                    "$ref": "#/definitions/tblUsers"
+                },
+                "tblTeams": {
+                    "$ref": "#/definitions/tblTeams"
+                }
+            }
+        },
+        "tblTeams": {
+            "type": "object",
+            "properties": {
+                "teamId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "teamName": {
+                    "type": "string"
+                },
+                "teamDescription": {
+                    "type": "string"
+                },
+                "githubURL": {
+                    "type": "string"
+                },
+                "challengeName": {
+                    "type": "string"
+                },
+                "skillsWanted": {
+                    "type": "string"
+                },
+                "msTeamsChannel": {
+                    "type": "string"
+                },
+                "msLabEnvironment": {
+                    "type": "string"
+                },
+                "msLabTenantName": {
+                    "type": "string"
+                },
+                "msLabAzureUsername": {
+                    "type": "string"
+                },
+                "msLabSPNAppId": {
+                    "type": "string"
+                },
+                "msLabSPNAppObjectId": {
+                    "type": "string"
+                },
+                "msLabSPNObjectId": {
+                    "type": "string"
+                },
+                "msLabSPNDisplayName": {
+                    "type": "string"
+                },
+                "msLabSPNKey": {
+                    "type": "string"
+                },
+                "active": {
+                    "type": "boolean"
+                },
+                "createdDate": {
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "modifiedDate": {
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "modifiedBy": {
+                    "type": "string"
+                },
+                "tblTeamSkillMatch": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tblTeamSkillMatch"
+                    }
+                },
+                "tblTeamHackers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tblTeamHackers"
+                    }
+                }
+            }
+        },
+        "tblTeamSkillMatch": {
+            "type": "object",
+            "properties": {
+                "teamId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "tblTeams": {
+                    "$ref": "#/definitions/tblTeams"
+                },
+                "skillId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "tblSkills": {
+                    "$ref": "#/definitions/tblSkills"
+                }
+            }
+        },
+        "tblUsers": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "userRole": {
+                    "type": "string"
+                },
+                "userRegEmail": {
+                    "type": "string"
+                },
+                "userMSTeamsEmail": {
+                    "type": "string"
+                },
+                "userDisplayName": {
+                    "type": "string"
+                },
+                "mySkills": {
+                    "type": "string"
+                },
+                "userTimeCommitment": {
+                    "type": "string"
+                },
+                "active": {
+                    "type": "boolean"
+                },
+                "createdDate": {
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "modifiedDate": {
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "modifiedBy": {
+                    "type": "string"
+                },
+                "adUserId": {
+                    "type": "string"
+                },
+                "userOptOut": {
+                    "type": "boolean"
+                },
+                "msftOptIn": {
+                    "type": "boolean"
+                },
+                "jnjOptIn": {
+                    "type": "boolean"
+                },
+                "sonsielOptIn": {
+                    "type": "boolean"
+                },
+                "tblUserSkillMatch": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tblUserSkillMatch"
+                    }
+                },
+                "tblTeamHackers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tblTeamHackers"
+                    }
+                }
+            }
+        },
+        "tblUserSkillMatch": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "tblUsers": {
+                    "$ref": "#/definitions/tblUsers"
+                },
+                "skillId": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "tblSkills": {
+                    "$ref": "#/definitions/tblSkills"
+                }
+            }
+        },
+        "TeamChannel": {
+            "type": "object",
+            "properties": {
+                "teamID": {
+                    "type": "string"
+                },
+                "channelId": {
+                    "type": "string"
+                },
+                "channelName": {
+                    "type": "string"
+                },
+                "channelDescription": {
+                    "type": "string"
+                },
+                "channelMessage": {
+                    "type": "string"
+                },
+                "channelWebURL": {
+                    "type": "string"
+                }
+            }
+        },
+        "TeamMember": {
+            "type": "object",
+            "properties": {
+                "userID": {
+                    "type": "string"
+                },
+                "memberID": {
+                    "type": "string"
+                },
+                "teamID": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
