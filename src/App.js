@@ -5,6 +5,7 @@ import User from './apis/user';
 import RegForm from "./components/regform"
 import LoginForm from "./components/loginform"
 import UnregForm from  "./components/unregform"
+import Survey from './apis/survey';
 
 
 
@@ -24,6 +25,7 @@ class App extends Component {
       msalInstance: msalI,
       user: new User(),
       loggedin: false,
+      survey: new Survey()
     }
   }
 
@@ -63,6 +65,7 @@ class App extends Component {
       this.setState({user:nUser});
     });
   }
+
   updateUser=(newUser)=>{
     let nUser=this.state.user;
     nUser.email=newUser.email;
@@ -80,7 +83,25 @@ class App extends Component {
     console.log(newUser);
   }
   
- 
+  updateSurvey=(newSurvey)=>{
+    let nSurvey=this.state.survey;
+    nSurvey.pronoun=newSurvey.pronoun;
+    nSurvey.country=newSurvey.country;
+    nSurvey.usstate=newSurvey.usstate;
+    nSurvey.company=newSurvey.company;
+    nSurvey.ethnicity=newSurvey.ethnicity;
+    nSurvey.expertise=newSurvey.expertise;
+    nSurvey.student=newSurvey.student;
+    nSurvey.updateSurvey()
+    //TODO Uncode when Update wired to API
+    //.then(()=>{
+    //  this.setState({
+    //    survey:nSurvey
+    //  });
+    //});
+  }
+  
+
   render() { 
 
     return(
@@ -91,7 +112,7 @@ class App extends Component {
           this.state.user.active?
             <UnregForm unregister={this.unregister} />
           :
-            <RegForm updateUser={this.updateUser} user={this.state.user}/>
+            <RegForm updateUser={this.updateUser} updateSurvey={this.updateSurvey} user={this.state.user}/>
         }
         </div>
       
