@@ -26,16 +26,16 @@ class Survey {
 
   updateSurvey=()=>{
   
-//TODO: Wire up to API    
-//    return    nh4h.put(Survey.APIURL+this.userid, this.getSurveyBody())
-//        .catch(err => {
-//          console.error(err);
-//        });      
+//TODO: FIX API Error
+    return    nh4h.post(Survey.APIURL, this.getSurveyBody())
+        .catch(err => {
+          console.error(err);
+        });      
   }
 
   getSurveyBody=()=>{
     let body={};
-    /* This may ore may not be prop */ body[Survey.USERID]=this.userid;
+    body[Survey.USERID]=this.userid;
     body[Survey.PRONOUN]=this.pronoun;
     body[Survey.COUNTRY]=this.country;
     body[Survey.USSTATE]=this.usstate;

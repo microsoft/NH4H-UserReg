@@ -60,6 +60,7 @@ class App extends Component {
   unregister=()=>{
     let nUser=this.state.user;
     nUser.active=false;
+    nUser.role="Unregistered"
     this.state.user.updateUser()
     .then(()=>{
       this.setState({user:nUser});
@@ -73,6 +74,9 @@ class App extends Component {
     nUser.displayname=newUser.displayname;
     nUser.active=newUser.active;
     nUser.role=newUser.role;
+    nUser.msftnewsletter=newUser.msftnewsletter;
+    nUser.jnjnewsletter=newUser.jnjnewsletter;
+    nUser.sonsielnewsletter=newUser.sonsielnewsletter;
     nUser.updateUser()
     .then(()=>{
       this.setState({
@@ -85,6 +89,7 @@ class App extends Component {
   
   updateSurvey=(newSurvey)=>{
     let nSurvey=this.state.survey;
+    nSurvey.userid=newSurvey.userid;
     nSurvey.pronoun=newSurvey.pronoun;
     nSurvey.country=newSurvey.country;
     nSurvey.usstate=newSurvey.usstate;
@@ -93,12 +98,11 @@ class App extends Component {
     nSurvey.expertise=newSurvey.expertise;
     nSurvey.student=newSurvey.student;
     nSurvey.updateSurvey()
-    //TODO Uncode when Update wired to API
-    //.then(()=>{
-    //  this.setState({
-    //    survey:nSurvey
-    //  });
-    //});
+    .then(()=>{
+      this.setState({
+        survey:nSurvey
+      });
+    });
   }
   
 

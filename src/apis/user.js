@@ -45,8 +45,7 @@ class User {
     return nh4h.post(User.APIURL+'regemail', body)
       .then((response) => {
         console.log(response);
-        if(response.data.returnError){
-            
+        if(response.data.returnError){            
           console.log("Not preregistered");
           this.preRegister();     
         }else{
@@ -102,9 +101,9 @@ class User {
       body[User.DISPLAYNAME]=this.displayname;
       body[User.OPTOUT]=this.optin;
       body[User.ACTIVE]=this.active;    
-      //body[User.JNJOPTIN]=this.jnjnewsletter
-      //body[User.SONSIELOPTIN]=this.sonsielnewsletter
-      //body[User.MSFTOPTIN]=this.msftnewsletter
+      body[User.JNJOPTIN]=this.jnjnewsletter
+      body[User.SONSIELOPTIN]=this.sonsielnewsletter
+      body[User.MSFTOPTIN]=this.msftnewsletter
       return(body);
   }
    

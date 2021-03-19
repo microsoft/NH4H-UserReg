@@ -1,6 +1,4 @@
 import React from 'react';
-import User from '../apis/user';
-import Survey from '../apis/survey';
 import {Header, Loader, Message, Button, Checkbox, Form, Select, Input } from 'semantic-ui-react'
 import { findAllByTestId } from '@testing-library/react';
 
@@ -113,7 +111,7 @@ class RegForm extends React.Component {
     }
     this.setState({
       [name]: value
-    });
+    });    
   }
 
 
@@ -124,6 +122,18 @@ class RegForm extends React.Component {
 
   handleCheck=(e)=>{
     this.setState({optin:!this.state.optin});
+  }
+
+  handleCheckmsft=(e)=>{
+    this.setState({msftnewsletter:!this.state.msftnewsletter});    
+  }
+
+  handleCheckjnj=(e)=>{
+    this.setState({jnjnewsletter:!this.state.jnjnewsletter});    
+  }
+  
+  handleChecksonsiel=(e)=>{
+      this.setState({sonsielnewsletter:!this.state.sonsielnewsletter});
   }
 
   handleSubmit=()=>{
@@ -217,7 +227,7 @@ class RegForm extends React.Component {
             <Form.Field
               name='jnjnewsletter'
               control={Checkbox}
-              onChange={ this.handleChange } 
+              onChange={ this.handleCheckjnj } 
               label='Yes'              
             />
             <label>Are you interested in receiving the Johnson & Johnson Notes on Nursing monthly newsletter with more inspiring stories of nurse-led innovation and nurse innovation resources?</label>
@@ -227,7 +237,7 @@ class RegForm extends React.Component {
             <Form.Field
               name='sonsielnewsletter'
               control={Checkbox}
-              onChange={ this.handleChange } 
+              onChange={ this.handleChecksonsiel } 
               label='Yes'
             />
             <label>Are you interested in receiving the SONSIEL newsletter to join a growing community of nurse innovators, leaders and entrepreneurs?</label>
@@ -237,7 +247,7 @@ class RegForm extends React.Component {
             <Form.Field 
               name='msftnewsletter'
               control={Checkbox}
-              onChange={ this.handleChange } 
+              onChange={ this.handleCheckmsft } 
               label='Yes'
             />
             <label>Are you interested in receiving the Microsoft Health and Life Sciences newsletter?</label>
