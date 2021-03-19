@@ -38,6 +38,10 @@ class App extends Component {
     let id = this.state.msalInstance.getAccount(); 
     this.state.user.email=id.userName;
     this.state.user.name=id.name;
+    //TODO if a code is present then first check code then pre reg
+    this.state.user.checkCode();
+    //TODO if the above gives us a role, then
+    //this.state.user.role=blah
     this.state.user.getUserID()
     .then(()=>{this.setState({
       loggedin: true

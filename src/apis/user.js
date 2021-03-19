@@ -94,6 +94,13 @@ class User {
             });
   }
 
+  checkCode=()=>{
+      nh4h.post(User.APIURL+'regmentor',{})
+      .then((response)=>{
+          console.log(response);
+      })
+  }
+
   getUserBody=()=>{
       let body={};
       body[User.REGEMAIL]=this.email;
