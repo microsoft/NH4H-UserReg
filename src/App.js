@@ -113,17 +113,17 @@ class App extends Component {
   render() { 
 
     return(
-    <div >
-      {!this.state.loggedin?
-        <LoginForm signin={this.signin}/>
-        : 
-          this.state.user.active?
-            <UnregForm unregister={this.unregister} />
-          :
-            <RegForm updateUser={this.updateUser} updateSurvey={this.updateSurvey} user={this.state.user}/>
+      <div >
+        {!this.state.loggedin?
+          <LoginForm signin={this.signin}/>
+          : 
+            this.state.user.active?
+              <UnregForm unregister={this.unregister} />
+            :
+              <RegForm updateUser={this.updateUser} updateSurvey={this.updateSurvey} user={this.state.user}
+          />
         }
-        </div>
-      
+      </div>      
     );
   }
 }
