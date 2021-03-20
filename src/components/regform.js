@@ -319,17 +319,8 @@ class RegForm extends React.Component {
               />
               <label>Are you interested in receiving the Microsoft Health and Life Sciences newsletter?</label>
             </Form.Group>
-            
-            
-            <Message>
-              <Form.Field required
-                control={Checkbox}               
-                onClick={this.handleCheck} 
-                toggle 
-                label='I agree to the Terms and Conditions' 
-                align="center"
-              />
-            </Message>
+                     
+           
           
             <br></br>
 
@@ -392,7 +383,7 @@ class RegForm extends React.Component {
             </Form.Group>
                   
             <br></br><br></br>
-            <Button onClick={this.handleSubmit} disabled={this.state.optin} type='submit'>Register</Button>
+            <Button onClick={this.handleSubmit} type='submit'>Register</Button>
 
           </Form>
         </div>
