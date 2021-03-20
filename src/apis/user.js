@@ -44,7 +44,7 @@ class User {
     body[User.REGEMAIL] = this.email ;
     return nh4h.post(User.APIURL+'regemail', body)
       .then((response) => {
-        console.log(response);
+        
         if(response.data.returnError){            
           console.log("Not preregistered");
           this.preRegister();     
@@ -93,10 +93,17 @@ class User {
             });
   }
 
-  checkCode=()=>{
-      nh4h.post(User.APIURL+'regmentor',{})
+  checkCode=(otccode)=>{
+     let body={
+        UsedByEmail:'s',
+        code:otccode
+     };
+    return nh4h.post(User.APIURL+'regmentor',body)
       .then((response)=>{
-          console.log(response);
+        if(!response.data.returnError){
+           console.log("Code valid. Role "+response.data.userRole);
+            this.role=response.data.userRole;
+        }
       })
   }
 
