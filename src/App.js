@@ -7,9 +7,6 @@ import LoginForm from "./components/loginform"
 import UnregForm from  "./components/unregform"
 import Survey from './apis/survey';
 
-
-
-
 class App extends Component {
   constructor(props){
     super(props);
@@ -27,7 +24,24 @@ class App extends Component {
       loggedin: false,
       survey: new Survey()
     }
+
+    console.log("querystring");
+    console.log(this.getQueryVariable("token"));
+
   }
+
+  getQueryVariable = (variable) => {
+    var query = window.location.search.substring(1);
+    console.log(query)//"token1=123&token2=456&token3=789"
+    var vars = query.split("&");
+    console.log(vars) //[ 'token1=123', 'token2=456', 'token3=789' ]
+    for (var i=0;i<vars.length;i++) {
+                var pair = vars[i].split("=");
+                console.log(pair)//[ 'token1', '123' ][ 'token2', '456' ][ 'token3', '789' ] 
+    if(pair[0] == variable){return pair[1];}
+     }
+     return(false);
+}
 
   componentDidMount() {
     if (this.state.msalInstance.getAccount()) {   
