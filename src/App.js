@@ -53,9 +53,11 @@ class App extends Component {
     this.state.user.email=id.userName;
     this.state.user.name=id.name;
     //TODO if a code is present then first check code then pre reg
-    if(true){
-    let otc='111111-111111-1111';
-    this.state.user.checkCode(otc)
+    let token = this.getQueryVariable("token");
+
+    if(token){
+    //let otc='111111-111111-1111';
+    this.state.user.checkCode(token)
     .then(()=>{
      
       this.preregister();
