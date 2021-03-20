@@ -2,6 +2,7 @@ import nh4h from './nh4h';
 
 class User {
   static APIURL='/users/';  
+  static APICODEURL='/reglink/code';  
   static ROLE="UserRole";
   static REGEMAIL="UserRegEmail";
   static TEAMSEMAIL="UserMSTeamsEmail";
@@ -95,14 +96,14 @@ class User {
 
   checkCode=(otccode)=>{
      let body={
-        UsedByEmail:'s',
-        code:otccode
+        UsedByEmail:this.email,
+        UniqueCode:otccode
      };
-    return nh4h.post(User.APIURL+'regmentor',body)
+    return nh4h.post(User.APICODEURL,body)
       .then((response)=>{
         if(!response.data.returnError){
-           console.log("Code valid. Role "+response.data.userRole);
-            this.role=response.data.userRole;
+           console.log("Code valid. Role "+response.data);
+            this.role=response.data;
         }
       })
   }

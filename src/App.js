@@ -95,11 +95,13 @@ class App extends Component {
 
   updateUser=(newUser)=>{
     let nUser=this.state.user;
+    if(this.state.user.role=='Preregistrant'){
+      nUser.role="Hacker";
+    }
     nUser.email=newUser.email;
     nUser.optin=newUser.optin;
     nUser.displayname=newUser.displayname;
     nUser.active=newUser.active;
-    nUser.role=newUser.role;
     nUser.msftnewsletter=newUser.msftnewsletter;
     nUser.jnjnewsletter=newUser.jnjnewsletter;
     nUser.sonsielnewsletter=newUser.sonsielnewsletter;
