@@ -167,38 +167,53 @@ class RegForm extends React.Component {
     }    
   };
  
-
+  
 
   handleSubmit=()=>{
-    this.setState({submitting:true},()=>{     
-      let nUser={
-        displayname:this.state.displayname,
-        email:this.state.email,
-        optin:this.state.optun,
-        active:true,
-        role:this.state.role,        
-        jnjnewsletter:this.state.jnjnewsletter,
-        sonsielnewsletter:this.state.sonsielnewsletter,
-        msftnewsletter:this.state.msftnewsletter
-      };
-      this.props.updateUser(nUser);
-      
-      //Capture and Insert Survey Data
-      let nSurvey={
-        userid:this.state.userid,
-        pronoun:this.state.pronoun,
-        country:this.state.country,
-        usstate:this.state.usstate,
-        company:this.state.company,
-        ethnicity:this.state.ethnicity,
-        expertise:this.state.expertise,
-        student:this.state.student
-      }
-      this.props.updateSurvey(nSurvey);
-      
-    });    
-  }
+    //RegForm Validation
+    //Validate required fields are completed for Registration
+    //Name/Email
+    let em = undefined !== this.state.email ? this.state.email.length : 0;
+    let dn = undefined !== this.state.displayname ? this.state.displayname.length : 0;
+    
+    if( em>0 && dn>0) { 
 
+      this.setState({RegError: false});      
+    
+      //update user
+      this.setState({submitting:true},()=>{     
+        let nUser={
+          displayname:this.state.displayname,
+          email:this.state.email,
+          optin:this.state.optun,
+          active:true,
+          role:this.state.role,        
+          jnjnewsletter:this.state.jnjnewsletter,
+          sonsielnewsletter:this.state.sonsielnewsletter,
+          msftnewsletter:this.state.msftnewsletter
+        };
+        this.props.updateUser(nUser);
+        
+        //Capture and Insert Survey Data
+        let nSurvey={
+          userid:this.state.userid,
+          pronoun:this.state.pronoun,
+          country:this.state.country,
+          usstate:this.state.usstate,
+          company:this.state.company,
+          ethnicity:this.state.ethnicity,
+          expertise:this.state.expertise,
+          student:this.state.student
+        }
+        this.props.updateSurvey(nSurvey);
+        
+      });    
+    }
+    else{
+      this.setState({RegError: true});
+    }    
+  }
+  
   
   render() {
    
@@ -232,7 +247,7 @@ class RegForm extends React.Component {
                 header='Terms and Conditions are required'
                 content='Please accept the terms and conditions before continuing.'                
               />
-              <button onClick={this.handleTCSubmit}>Accept Terms</button>
+              <Button onClick={this.handleTCSubmit}>Accept Terms</Button>
             </Form>
         </div>:
   
@@ -248,12 +263,12 @@ class RegForm extends React.Component {
             </Header.Subheader>
           </Header>               
           <br></br>
-          <Form> 
+          <Form error={this.state.RegError}> 
 
             <Message
               error
               header='Missing Required Fields'
-              content='Please complete the required fields.'
+              content='Please complete the required fields. (Email & Display Name)'
             />
 
             <Form.Group widths='equal' error={this.state.RegError}>                      
