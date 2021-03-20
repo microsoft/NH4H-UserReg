@@ -24,10 +24,6 @@ class App extends Component {
       loggedin: false,
       survey: new Survey()
     }
-
-    console.log("querystring");
-    console.log(this.getQueryVariable("token"));
-
   }
 
   getQueryVariable = (variable) => {
@@ -36,11 +32,11 @@ class App extends Component {
     var vars = query.split("&");
     console.log(vars) //[ 'token1=123', 'token2=456', 'token3=789' ]
     for (var i=0;i<vars.length;i++) {
-                var pair = vars[i].split("=");
-                console.log(pair)//[ 'token1', '123' ][ 'token2', '456' ][ 'token3', '789' ] 
-    if(pair[0] == variable){return pair[1];}
-     }
-     return(false);
+      var pair = vars[i].split("=");
+      console.log(pair)//[ 'token1', '123' ][ 'token2', '456' ][ 'token3', '789' ] 
+      if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
 }
 
   componentDidMount() {
@@ -52,19 +48,18 @@ class App extends Component {
     let id = this.state.msalInstance.getAccount(); 
     this.state.user.email=id.userName;
     this.state.user.name=id.name;
-    //TODO if a code is present then first check code then pre reg
+    //If a code is present then first check code then pre reg
     let token = this.getQueryVariable("token");
 
-    if(token){
-    //let otc='111111-111111-1111';
-    this.state.user.checkCode(token)
-    .then(()=>{
-     
+    if(token){      
+      this.state.user.checkCode(token)
+      .then(()=>{      
+        this.preregister();
+      });
+    }else{
+      console.log("no code in qs");
       this.preregister();
-    });
-  }else{
-    this.preregister();
-  }       
+    }       
     
   }
   
