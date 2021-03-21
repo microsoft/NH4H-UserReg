@@ -95,7 +95,6 @@ class RegForm extends React.Component {
         email:this.props.user.email,
         optin:this.props.user.optin,
         displayname:this.props.user.displayname,
-        role:'Hacker', //this should be updated on one time keys
         submitting:false,
         isActiveTnC: true,        
         AcceptTC1: false,
@@ -187,7 +186,6 @@ class RegForm extends React.Component {
           email:this.state.email,
           optin:this.state.optun,
           active:true,
-          role:this.state.role,        
           jnjnewsletter:this.state.jnjnewsletter,
           sonsielnewsletter:this.state.sonsielnewsletter,
           msftnewsletter:this.state.msftnewsletter
