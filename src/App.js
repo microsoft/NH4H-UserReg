@@ -96,7 +96,10 @@ class App extends Component {
 
   updateUser=(newUser)=>{
     let nUser=this.state.user;
-    if(this.state.user.role=='Preregistrant'){
+    console.log("******");
+    console.log(this.state.user);
+
+    if(this.state.user.role=='Preregistrant' || this.state.user.role=='Unregistered' ){
       nUser.role="Hacker";
     }
     nUser.email=newUser.email;
