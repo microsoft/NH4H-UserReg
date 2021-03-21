@@ -12,8 +12,9 @@ class App extends Component {
     super(props);
     let msalConfig = {
       auth: {
-        clientId: 'b3544b0c-1209-4fe8-b799-8f63a0179fa0',
-        authority: "https://login.microsoftonline.com/e773e193-89d3-44d9-ae4e-17766699f674",
+        clientId: 'b3544b0c-1209-4fe8-b799-8f63a0179fa0',        
+        authority: "https://login.microsoftonline.com/common",
+        //authority: "https://login.microsoftonline.com/e773e193-89d3-44d9-ae4e-17766699f674",
         //redirectUri:"/loggedin" 
       }
     };
