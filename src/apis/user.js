@@ -3,14 +3,14 @@ import nh4h from './nh4h';
 class User {
   static APIURL='/users/';  
   static APICODEURL='/reglink/code';  
-  static ROLE="UserRole";
-  static REGEMAIL="UserRegEmail";
+  static ROLE="userRole";
+  static REGEMAIL="userRegEmail";
   static TEAMSEMAIL="UserMSTeamsEmail";
   static DISPLAYNAME="UserDisplayName";
   static TIMECOMMITMENT="UserTimeCommitment";
   static ACTIVE="Active";
   static SKILLS="tblUserSkillMatch";
-  static OPTOUT="UserOptOut";
+  static OPTOUT="userOptOut";
   static SKILL="UserSkill";
   static MSFTOPTIN="MSFTOptIn";
   static JNJOPTIN="JNJOptIn";
@@ -52,6 +52,7 @@ class User {
         }else{
           this.userid= response.data.userId;
           this.mySkills= response.data[User.SKILLS];
+console.log("pre-reg role" + response.data[User.ROLE]);
           this.role=response.data[User.ROLE];
           this.active=response.data['active'];
           this.displayname=response.data[User.DISPLAYNAME];

@@ -98,8 +98,10 @@ class App extends Component {
     let nUser=this.state.user;
     console.log("******");
     console.log(this.state.user);
+    console.log(this.state.user.role=='Unregistered');
+    console.log(this.state.user.role=='Preregistrant');
 
-    if(this.state.user.role=='Preregistrant' || this.state.user.role=='Unregistered' ){
+    if(this.state.user.role==='Preregistrant' || this.state.user.role==='Unregistered' ){
       nUser.role="Hacker";
     }
     nUser.email=newUser.email;
