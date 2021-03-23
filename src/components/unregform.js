@@ -42,7 +42,7 @@ class UnregForm extends React.Component {
            
             <span style={{float: 'right'}}>
               <Button onClick={this.props.unregister} color='red'>
-              <Icon name='microsoft' /> UnRegister
+              <Icon name='microsoft' /> Unregister
             </Button>
             </span>
             <h1>Thank you for registering for NurseHack4Health!</h1>
