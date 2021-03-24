@@ -8,9 +8,9 @@ on:
 env:
   AZURE_WEBAPP_NAME: nh4hmatchmaker
   AZURE_WEBAPP_PACKAGE_PATH: './build'
+  AZURE_WEBAPP_TARGET_PATH: './site/wwwroot/UserReg/'
+  FTP_PROTOCOL: 'ftps'
   NODE_VERSION: '14.x'
-  DEPLOYMENT_SLOT_PRODUCTION: 'production'
-  PROJECT: 'UserReg'
   CI: false
 
 jobs:
@@ -33,10 +33,10 @@ jobs:
       if: github.ref == 'refs/heads/main'
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
+        dangerous-clean-slate: true
+        protocol: ${{ env.FTP_PROTOCOL }}
         server: ${{ secrets.PUBLISH_PROFILE_FTP_URL }}
         username: ${{ secrets.PUBLISH_PROFILE_FTP_USERNAME }}
         password: ${{ secrets.PUBLISH_PROFILE_FTP_PASSWORD }}
-        protocol: 'ftps'
-        dangerous-clean-slate: true
-        local-dir: './build/'
-        server-dir: './site/wwwroot/UserReg/'
+        local-dir: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        server-dir: ${{ env.AZURE_WEBAPP_TARGET_PATH }}
