@@ -21,7 +21,7 @@ class UnregForm extends React.Component {
     fetch(rawConfirmationHTML)
         .then(r => r.text())
         .then(text => {
-          console.log('text decoded:', text);
+//          console.log('text decoded:', text);
           this.setState({htmlstring:text});
         })
   }
@@ -31,9 +31,8 @@ class UnregForm extends React.Component {
   }
 
 
-
     render() {
-        console.log(this.state.htmlstring) ;
+//        console.log(this.state.htmlstring) ;
         
         return (
           

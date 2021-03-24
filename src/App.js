@@ -29,12 +29,12 @@ class App extends Component {
 
   getQueryVariable = (variable) => {
     var query = window.location.search.substring(1);
-    console.log(query)//"token1=123&token2=456&token3=789"
+    //console.log(query)//"token1=123&token2=456&token3=789"
     var vars = query.split("&");
-    console.log(vars) //[ 'token1=123', 'token2=456', 'token3=789' ]
+    //console.log(vars) //[ 'token1=123', 'token2=456', 'token3=789' ]
     for (var i=0;i<vars.length;i++) {
       var pair = vars[i].split("=");
-      console.log(pair)//[ 'token1', '123' ][ 'token2', '456' ][ 'token3', '789' ] 
+      //console.log(pair)//[ 'token1', '123' ][ 'token2', '456' ][ 'token3', '789' ] 
       if(pair[0] == variable){return pair[1];}
     }
     return(false);
@@ -58,7 +58,7 @@ class App extends Component {
         this.preregister();
       });
     }else{
-      console.log("no code in qs");
+      //console.log("no code in qs");
       this.preregister();
     }       
     
@@ -96,11 +96,12 @@ class App extends Component {
 
   updateUser=(newUser)=>{
     let nUser=this.state.user;
+/*
     console.log("******");
     console.log(this.state.user);
     console.log(this.state.user.role=='Unregistered');
     console.log(this.state.user.role=='Preregistrant');
-
+*/
     if(this.state.user.role==='Preregistrant' || this.state.user.role==='Unregistered' ){
       nUser.role="Hacker";
     }
@@ -118,7 +119,7 @@ class App extends Component {
       });
     });
     
-    console.log(newUser);
+    //console.log(newUser);
   }
   
   updateSurvey=(newSurvey)=>{

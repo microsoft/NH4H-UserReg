@@ -47,12 +47,12 @@ class User {
       .then((response) => {
         
         if(response.data.returnError){            
-          console.log("Not preregistered");
+//          console.log("Not preregistered");
           this.preRegister();     
         }else{
           this.userid= response.data.userId;
           this.mySkills= response.data[User.SKILLS];
-console.log("pre-reg role" + response.data[User.ROLE]);
+//console.log("pre-reg role" + response.data[User.ROLE]);
           this.role=response.data[User.ROLE];
           this.active=response.data['active'];
           this.displayname=response.data[User.DISPLAYNAME];
@@ -103,7 +103,7 @@ console.log("pre-reg role" + response.data[User.ROLE]);
     return nh4h.post(User.APICODEURL,body)
       .then((response)=>{
         if(!response.data.returnError){
-           console.log("Code valid. Role "+response.data);
+//           console.log("Code valid. Role "+response.data);
             this.role=response.data;
         }
       })
