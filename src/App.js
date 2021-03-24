@@ -122,24 +122,6 @@ class App extends Component {
     //console.log(newUser);
   }
   
-  updateSurvey=(newSurvey)=>{
-    let nSurvey=this.state.survey;
-    nSurvey.userid=newSurvey.userid;
-    nSurvey.pronoun=newSurvey.pronoun;
-    nSurvey.country=newSurvey.country;
-    nSurvey.usstate=newSurvey.usstate;
-    nSurvey.company=newSurvey.company;
-    nSurvey.ethnicity=newSurvey.ethnicity;
-    nSurvey.expertise=newSurvey.expertise;
-    nSurvey.student=newSurvey.student;
-    nSurvey.updateSurvey()
-    .then(()=>{
-      this.setState({
-        survey:nSurvey
-      });
-    });
-  }
-  
 
   render() { 
 
@@ -151,7 +133,7 @@ class App extends Component {
             this.state.user.active?
               <UnregForm unregister={this.unregister} />
             :
-              <RegForm updateUser={this.updateUser} updateSurvey={this.updateSurvey} user={this.state.user}
+              <RegForm updateUser={this.updateUser} user={this.state.user}
           />
         }
       </div>      
