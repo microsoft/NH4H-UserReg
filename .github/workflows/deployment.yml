@@ -31,9 +31,10 @@ jobs:
 
     - name: 'Deploy to Azure WebApp Production'
       if: github.ref == 'refs/heads/main'
-      uses: azure/webapps-deploy@v2
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        slot-name: ${{ env.DEPLOYMENT_SLOT_PRODUCTION }}
-        publish-profile: ${{ secrets.PUBLISH_PROFILE_NH4H_USERREG_PROD }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        server: ${{ secrets.PUBLISH_PROFILE_FTP_URL }}
+        username: ${{ secrets.PUBLISH_PROFILE_FTP_USERNAME }}
+        password: ${{ secrets.PUBLISH_PROFILE_FTP_PASSWORD }}
+        protocol: 'ftps'
+        server-dir: './site/wwwroot/UserReg/'
