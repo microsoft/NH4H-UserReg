@@ -7,9 +7,10 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: nh4hmatchmaker
-  AZURE_WEBAPP_PACKAGE_PATH: './build'
+  AZURE_WEBAPP_PACKAGE_PATH: './build/'
+  AZURE_WEBAPP_TARGET_PATH: './site/wwwroot/UserReg/'
+  FTP_PROTOCOL: 'ftps'
   NODE_VERSION: '14.x'
-  DEPLOYMENT_SLOT_PRODUCTION: 'production'
   CI: false
 
 jobs:
@@ -30,9 +31,12 @@ jobs:
 
     - name: 'Deploy to Azure WebApp Production'
       if: github.ref == 'refs/heads/main'
-      uses: azure/webapps-deploy@v2
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        slot-name: ${{ env.DEPLOYMENT_SLOT_PRODUCTION }}
-        publish-profile: ${{ secrets.PUBLISH_PROFILE_NH4H_USERREG_PROD }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        dangerous-clean-slate: true
+        protocol: ${{ env.FTP_PROTOCOL }}
+        server: ${{ secrets.PUBLISH_PROFILE_FTP_URL }}
+        username: ${{ secrets.PUBLISH_PROFILE_FTP_USERNAME }}
+        password: ${{ secrets.PUBLISH_PROFILE_FTP_PASSWORD }}
+        local-dir: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        server-dir: ${{ env.AZURE_WEBAPP_TARGET_PATH }}
