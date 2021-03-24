@@ -37,4 +37,6 @@ jobs:
         username: ${{ secrets.PUBLISH_PROFILE_FTP_USERNAME }}
         password: ${{ secrets.PUBLISH_PROFILE_FTP_PASSWORD }}
         protocol: 'ftps'
+        dangerous-clean-slate: true
+        local-dir: './build/'
         server-dir: './site/wwwroot/UserReg/'
