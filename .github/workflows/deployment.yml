@@ -36,4 +36,4 @@ jobs:
         slot-name: ${{ env.DEPLOYMENT_SLOT_PRODUCTION }}
         publish-profile: ${{ secrets.PUBLISH_PROFILE_NH4H_USERREG_PROD }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-        path: './UserReg'
+        path: './UserReg/'
