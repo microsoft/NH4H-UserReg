@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as Msal from "msal";
-import { Button, Icon } from 'semantic-ui-react'
+import {Loader, Button, Icon } from 'semantic-ui-react'
 import User from './apis/user';
 import RegForm from "./components/regform"
 import LoginForm from "./components/loginform"
@@ -23,7 +23,8 @@ class App extends Component {
       msalInstance: msalI,
       user: new User(),
       loggedin: false,
-      survey: new Survey()
+      survey: new Survey(),
+      submitting:false
     }
   }
 
@@ -68,12 +69,17 @@ class App extends Component {
     let loginRequest = {
       scopes: ["user.read"] 
     };
-    this.state.msalInstance.loginRedirect(loginRequest)
-      .then(response => {
-        this.processSignIn();
-      })
-      .catch(err => {
-        // handle error
+    this.setState({submitting:true});
+
+    this.setState({submitting:true},()=>{     
+      this.state.msalInstance.loginRedirect(loginRequest)
+      //bug on 'then' when user browser logs in user (browser set to auto login)
+        .then(response => {
+          this.processSignIn();
+        })
+        .catch(err => {
+          // handle error
+        });
       });
   } 
 
@@ -126,17 +132,24 @@ class App extends Component {
   render() { 
 
     return(
-      <div >
-        {!this.state.loggedin?
-          <LoginForm signin={this.signin}/>
-          : 
-            this.state.user.active?
-              <UnregForm unregister={this.unregister} />
-            :
-              <RegForm updateUser={this.updateUser} user={this.state.user}
-          />
-        }
-      </div>      
+
+      this.state.submitting?
+      <div>
+        <Loader active inline='centered' />
+      </div>
+      
+      :
+        <div >        
+          {!this.state.loggedin?
+            <LoginForm signin={this.signin}/>
+            : 
+              this.state.user.active?
+                <UnregForm unregister={this.unregister} />
+              :
+                <RegForm updateUser={this.updateUser} user={this.state.user}
+            />
+          }
+        </div>      
     );
   }
 }
