@@ -29,11 +29,20 @@ jobs:
         npm install
         npm run build --if-present
 
+    - name: Check file existence
+      id: check_files
+      uses: andstor/file-existence-action@v1
+      with:
+        files: "precache-manifest.*.js"
+
+    - name: File exists
+      if: steps.check_files.outputs.file_exists == 'true'
+      run: echo 'File found'
+      
     - name: 'Deploy to Azure WebApp Production'
       if: github.ref == 'refs/heads/main'
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
-        dangerous-clean-slate: true
         protocol: ${{ env.FTP_PROTOCOL }}
         server: ${{ secrets.PUBLISH_PROFILE_FTP_URL }}
         username: ${{ secrets.PUBLISH_PROFILE_FTP_USERNAME }}
