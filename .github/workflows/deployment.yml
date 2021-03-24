@@ -10,6 +10,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: './build'
   NODE_VERSION: '14.x'
   DEPLOYMENT_SLOT_PRODUCTION: 'production'
+  PROJECT: 'UserReg'
   CI: false
 
 jobs:
