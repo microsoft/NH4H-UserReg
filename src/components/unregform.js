@@ -1,10 +1,5 @@
 import React from 'react';
 import { Button, Icon } from 'semantic-ui-react'
-//import parse from "html-react-parser";
-
-import rawConfirmationHTML from '../EmailTemplate.htm';
-
-
 
 class UnregForm extends React.Component {
 
@@ -16,9 +11,8 @@ class UnregForm extends React.Component {
     this.state={htmlstring:""}    
   }
 
-
   GetConfirmationHTML=() => {
-    fetch(rawConfirmationHTML)
+    fetch("https://apps.nursehack4health.org/EmailTemplateV1.htm")
         .then(r => r.text())
         .then(text => {
 //          console.log('text decoded:', text);
