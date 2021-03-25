@@ -97,13 +97,22 @@ class App extends Component {
     let nUser=this.state.user;
     nUser.active=false;
     nUser.role="Unregistered"
-    this.state.user.updateUser()
-    .then(()=>{
-      this.setState({user:nUser});
+    this.setState(
+      {user:nUser,
+        submitting:true},()=>{
+    
+      this.state.user.updateUser()
+      .then(()=>{
+        this.setState({
+          submitting:false
+          });
+      });
     });
+   
   }
 
   updateUser=(newUser)=>{
+
     let nUser=this.state.user;
 /*
     console.log("******");
@@ -111,6 +120,7 @@ class App extends Component {
     console.log(this.state.user.role=='Unregistered');
     console.log(this.state.user.role=='Preregistrant');
 */
+
     if(this.state.user.role==='Preregistrant' || this.state.user.role==='Unregistered' ){
       nUser.role="Hacker";
     }
@@ -121,12 +131,19 @@ class App extends Component {
     nUser.msftnewsletter=newUser.msftnewsletter;
     nUser.jnjnewsletter=newUser.jnjnewsletter;
     nUser.sonsielnewsletter=newUser.sonsielnewsletter;
-    nUser.updateUser()
-    .then(()=>{
-      this.setState({
-        user:nUser
+    this.setState({
+      user:nUser,
+      submitting:true
+    },()=>{
+      this.state.user.updateUser()
+      .then(()=>{
+        this.setState({
+          submitting:false,
+          user:nUser
+        });
       });
     });
+    
     
     //console.log(newUser);
   }
