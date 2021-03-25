@@ -47,7 +47,8 @@ class App extends Component {
     } 
   }
   processSignIn =() =>{
-    let id = this.state.msalInstance.getAccount(); 
+    this.setState({submitting:true},()=>{
+      let id = this.state.msalInstance.getAccount(); 
     this.state.user.email=id.userName;
     this.state.user.name=id.name;
     //If a code is present then first check code then pre reg
@@ -61,7 +62,9 @@ class App extends Component {
     }else{
       //console.log("no code in qs");
       this.preregister();
-    }       
+    }   
+    });
+        
     
   }
   
@@ -69,25 +72,25 @@ class App extends Component {
     let loginRequest = {
       scopes: ["user.read"] 
     };
-    this.setState({submitting:true});
+    
 
-    this.setState({submitting:true},()=>{     
+    if(this.state.msalInstance.loginRedirect(loginRequest)){     
       this.state.msalInstance.loginRedirect(loginRequest)
-      //bug on 'then' when user browser logs in user (browser set to auto login)
         .then(response => {
           this.processSignIn();
         })
         .catch(err => {
           // handle error
         });
-      });
+      }
   } 
 
   preregister =() =>{
     this.state.user.getUserID()
     .then(()=>{
       this.setState({
-      loggedin: true
+      loggedin: true,
+      submitting:false
     });}) 
   }
   unregister=()=>{
@@ -135,7 +138,7 @@ class App extends Component {
 
       this.state.submitting?
       <div>
-        <Loader active inline='centered' />
+        <Loader active size="massive" inline='centered' >Loading...</Loader>
       </div>
       
       :
