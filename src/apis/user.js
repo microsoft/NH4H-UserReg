@@ -105,6 +105,7 @@ class User {
         if(!response.data.returnError){
 //           console.log("Code valid. Role "+response.data);
             this.role=response.data;
+            this.updateUser();
         }
       })
   }
