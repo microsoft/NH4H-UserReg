@@ -143,36 +143,30 @@ class RegForm extends React.Component {
                 width="5"
                 value={this.state.displayname}          
             />   
-
-            <Form.Group inline>            
-              <Form.Field
-                name='jnjnewsletter'
-                control={Checkbox}
-                onChange={ this.handleCheckjnj } 
-                label='Yes'              
-              />
-              <label>Are you interested in receiving the Johnson & Johnson Notes on Nursing monthly newsletter with more inspiring stories of nurse-led innovation and nurse innovation resources?</label>
-            </Form.Group>
             
-            <Form.Group inline>            
-              <Form.Field
-                name='sonsielnewsletter'
-                control={Checkbox}
-                onChange={ this.handleChecksonsiel } 
-                label='Yes'
-              />
-              <label>Are you interested in receiving the SONSIEL newsletter to join a growing community of nurse innovators, leaders and entrepreneurs?</label>
-            </Form.Group>
-            
-            <Form.Group inline>            
-              <Form.Field 
-                name='msftnewsletter'
-                control={Checkbox}
-                onChange={ this.handleCheckmsft } 
-                label='Yes'
-              />
-              <label>Are you interested in receiving the Microsoft Health and Life Sciences newsletter?</label>
-            </Form.Group>
+            <label>Are you interested in receiving the Johnson & Johnson Notes on Nursing monthly newsletter with more inspiring stories of nurse-led innovation and nurse innovation resources?</label>
+            <Form.Field
+              name='jnjnewsletter'
+              control={Checkbox}
+              onChange={ this.handleCheckjnj } 
+              label='Yes'              
+            />              
+          
+            <label>Are you interested in receiving the SONSIEL newsletter to join a growing community of nurse innovators, leaders and entrepreneurs?</label>
+            <Form.Field
+              name='sonsielnewsletter'
+              control={Checkbox}
+              onChange={ this.handleChecksonsiel } 
+              label='Yes'
+            />                        
+          
+            <label>Are you interested in receiving the Microsoft Health and Life Sciences newsletter?</label>
+            <Form.Field 
+              name='msftnewsletter'
+              control={Checkbox}
+              onChange={ this.handleCheckmsft } 
+              label='Yes'
+            />
                   
             <br></br><br></br>
             <Button onClick={this.handleSubmit} type='submit'>Register</Button>
