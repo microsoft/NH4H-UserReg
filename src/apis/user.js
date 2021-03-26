@@ -53,7 +53,9 @@ class User {
           this.userid= response.data.userId;
           this.mySkills= response.data[User.SKILLS];
 //console.log("pre-reg role" + response.data[User.ROLE]);
-          this.role=response.data[User.ROLE];
+          if(this.role==="Preregistrant"){
+           this.role=response.data[User.ROLE];
+          }//else role has been modified via an OTC and shouldn't be touched
           this.active=response.data['active'];
           this.displayname=response.data[User.DISPLAYNAME];
           this.optin=!response.data[User.OPTOUT];
@@ -105,7 +107,6 @@ class User {
         if(!response.data.returnError){
 //           console.log("Code valid. Role "+response.data);
             this.role=response.data;
-            this.updateUser();
         }
       })
   }
