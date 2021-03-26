@@ -26,7 +26,7 @@ class App extends Component {
       loggedin: false,
       unreg: false,
       survey: new Survey(),
-      submitting:false
+      submitting:true
     }
   }
 
@@ -46,6 +46,8 @@ class App extends Component {
   componentDidMount() {
     if (this.state.msalInstance.getAccount()) {   
       this.processSignIn();
+    }else{
+      this.setState({submitting:false});
     } 
   }
   processSignIn =() =>{
