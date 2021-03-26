@@ -5,6 +5,7 @@ import User from './apis/user';
 import RegForm from "./components/regform"
 import LoginForm from "./components/loginform"
 import UnregForm from  "./components/unregform"
+import UnregConf from  "./components/unregconf"
 import Survey from './apis/survey';
 
 class App extends Component {
@@ -93,33 +94,24 @@ class App extends Component {
       submitting:false
     });}) 
   }
+  reregister=()=>{
+    let nUser=this.state.user;
+    nUser.active=false;
+    nUser.role="Preregistrant";
+    this.doUserUpdateAndShowSpinner(nUser);
+  }
+
   unregister=()=>{
     let nUser=this.state.user;
     nUser.active=false;
     nUser.role="Unregistered"
-    this.setState(
-      {user:nUser,
-        submitting:true},()=>{
-    
-      this.state.user.updateUser()
-      .then(()=>{
-        this.setState({
-          submitting:false
-          });
-      });
-    });
+    this.doUserUpdateAndShowSpinner(nUser);
    
   }
 
   updateUser=(newUser)=>{
 
     let nUser=this.state.user;
-/*
-    console.log("******");
-    console.log(this.state.user);
-    console.log(this.state.user.role=='Unregistered');
-    console.log(this.state.user.role=='Preregistrant');
-*/
 
     if(this.state.user.role==='Preregistrant' || this.state.user.role==='Unregistered' ){
       nUser.role="Hacker";
@@ -131,6 +123,10 @@ class App extends Component {
     nUser.msftnewsletter=newUser.msftnewsletter;
     nUser.jnjnewsletter=newUser.jnjnewsletter;
     nUser.sonsielnewsletter=newUser.sonsielnewsletter;
+    this.doUserUpdateAndShowSpinner(nUser);
+  }
+  
+  doUserUpdateAndShowSpinner=(nUser)=>{
     this.setState({
       user:nUser,
       submitting:true
@@ -138,16 +134,11 @@ class App extends Component {
       this.state.user.updateUser()
       .then(()=>{
         this.setState({
-          submitting:false,
-          user:nUser
+          submitting:false
         });
       });
     });
-    
-    
-    //console.log(newUser);
   }
-  
 
   render() { 
 
@@ -166,7 +157,10 @@ class App extends Component {
               this.state.user.active?
                 <UnregForm unregister={this.unregister} />
               :
-                <RegForm updateUser={this.updateUser} user={this.state.user}
+                this.state.user.role==='Unregistered' ?
+                  <UnregConf reregister={this.reregister}/>
+                :
+                  <RegForm updateUser={this.updateUser} user={this.state.user}
             />
           }
         </div>      
