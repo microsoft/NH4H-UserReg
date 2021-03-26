@@ -99,7 +99,7 @@ class RegForm extends React.Component {
           <Header as='h2'>
             Registration
             <Header.Subheader>
-                You must fill in this form and accept the Terms and Conditions to register.
+                You must fill in this form to register.
             </Header.Subheader>
           </Header>               
           <br></br>
@@ -133,16 +133,18 @@ class RegForm extends React.Component {
               </Form.Field>
             </Form.Group>                
 
-
-            <Form.Field error={this.state.RegError}
-                required
-                name='displayname'
-                control={Input}
-                onChange={ this.handleChange } 
-                label='How would you like your name displayed?'
-                width="5"
-                value={this.state.displayname}          
-            />   
+            <Form.Group >               
+              <Form.Field required>
+                <label>How would you like your name displayed? If you are a current Office 365/Teams user, your display name may reflect that name.</label>
+                <Form.Field error={this.state.RegError}
+                    required
+                    name='displayname'
+                    control={Input}
+                    onChange={ this.handleChange } 
+                    value={this.state.displayname}          
+                />  
+            </Form.Field>
+            </Form.Group> 
             
             <label>Are you interested in receiving the Johnson & Johnson Notes on Nursing monthly newsletter with more inspiring stories of nurse-led innovation and nurse innovation resources?</label>
             <Form.Field
