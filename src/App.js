@@ -24,6 +24,7 @@ class App extends Component {
       msalInstance: msalI,
       user: new User(),
       loggedin: false,
+      unreg: false,
       survey: new Survey(),
       submitting:false
     }
@@ -94,26 +95,20 @@ class App extends Component {
       submitting:false
     });}) 
   }
-  reregister=()=>{
-    let nUser=this.state.user;
-    nUser.active=false;
-    nUser.role="Preregistrant";
-    this.doUserUpdateAndShowSpinner(nUser);
-  }
+
 
   unregister=()=>{
     let nUser=this.state.user;
     nUser.active=false;
-    nUser.role="Unregistered"
-    this.doUserUpdateAndShowSpinner(nUser);
-   
+    this.setState({unreg:true});
+    this.doUserUpdateAndShowSpinner(nUser);  
   }
 
   updateUser=(newUser)=>{
 
     let nUser=this.state.user;
 
-    if(this.state.user.role==='Preregistrant' || this.state.user.role==='Unregistered' ){
+    if(this.state.user.role==='Preregistrant' ){
       nUser.role="Hacker";
     }
     nUser.email=newUser.email;
@@ -157,8 +152,8 @@ class App extends Component {
               this.state.user.active?
                 <UnregForm unregister={this.unregister} />
               :
-                this.state.user.role==='Unregistered' ?
-                  <UnregConf reregister={this.reregister}/>
+                this.state.unreg?
+                  <UnregConf />
                 :
                   <RegForm updateUser={this.updateUser} user={this.state.user}
             />
