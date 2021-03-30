@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'https://hackapis.azurewebsites.net/api',
+    baseURL: 'https://hackapi-v2.azurewebsites.net/api',
     headers: {
       common:{
         'content-type':'application/json',
