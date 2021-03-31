@@ -53,30 +53,27 @@ class App extends Component {
   processSignIn =() =>{
     this.setState({submitting:true},()=>{
       let id = this.state.msalInstance.getAccount(); 
-    this.state.user.email=id.userName;
-    this.state.user.name=id.name;
-    //If a code is present then first check code then pre reg
-    let token = this.getQueryVariable("token");
+      this.state.user.email=id.userName;
+      this.state.user.name=id.name;
+      //If a code is present then first check code then pre reg
+      let token = this.getQueryVariable("token");
 
-    if(token){      
-      this.state.user.checkCode(token)
-      .then(()=>{      
+      if(token){      
+        this.state.user.checkCode(token)
+        .then(()=>{      
+          this.preregister();
+        });
+      }else{
+        //console.log("no code in qs");
         this.preregister();
-      });
-    }else{
-      //console.log("no code in qs");
-      this.preregister();
-    }   
+      }   
     });
-        
-    
   }
   
   signin = ()=>{
     let loginRequest = {
       scopes: ["user.read"] 
-    };
-    
+    };    
 
     if(this.state.msalInstance.loginRedirect(loginRequest)){     
       this.state.msalInstance.loginRedirect(loginRequest)
@@ -85,6 +82,7 @@ class App extends Component {
         })
         .catch(err => {
           // handle error
+          this.setState({submitting:false});
         });
       }
   } 

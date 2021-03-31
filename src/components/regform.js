@@ -71,7 +71,7 @@ class RegForm extends React.Component {
         let nUser={
           displayname:this.state.displayname,
           email:this.state.email,
-          optin:this.state.optun,
+          optin:this.state.optin,
           active:true,
           jnjnewsletter:this.state.jnjnewsletter,
           sonsielnewsletter:this.state.sonsielnewsletter,
