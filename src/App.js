@@ -147,7 +147,10 @@ class App extends Component {
       :
         <div >        
           {!this.state.loggedin?
-            <LoginForm signin={this.signin}/>
+            <div>
+              <p align='center'>Please sign in to Register</p>         
+              <p align='center'><LoginForm signin={this.signin}/></p>
+            </div>
             : 
               this.state.user.active?
                 <UnregForm unregister={this.unregister} />
