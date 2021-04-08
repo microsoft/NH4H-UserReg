@@ -148,7 +148,7 @@ class App extends Component {
         <div >        
           {!this.state.loggedin?
             <div>
-              <p align='center'>Please sign in to Register</p>         
+              <p align='center'>Please sign in to register:</p>         
               <p align='center'><LoginForm signin={this.signin}/></p>
             </div>
             : 
