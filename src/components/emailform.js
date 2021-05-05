@@ -1,5 +1,5 @@
 import React from 'react';
-import {Header, Loader, Message, Button, Checkbox, Form, Select, Input } from 'semantic-ui-react'
+import {Header, Button, Form, Input } from 'semantic-ui-react'
 
 
 
@@ -54,7 +54,8 @@ class EmailForm extends React.Component {
                 <Form.Group inline>            
                   <Form.Field error={this.state.RegError}
                     required
-                    name='email'                    
+                    name='email'
+                    type="email"                    
                     control={Input} 
                     onChange={ this.handleChange }                     
                     value={this.state.email}                                         
