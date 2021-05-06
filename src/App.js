@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import * as Msal from "msal";
-import {Loader, Button, Icon } from 'semantic-ui-react'
+import {Loader } from 'semantic-ui-react'
 import User from './apis/user';
 import RegForm from "./components/regform"
 import LoginForm from "./components/loginform"
 import UnregForm from  "./components/unregform"
 import UnregConf from  "./components/unregconf"
 import Survey from './apis/survey';
+import EmailForm from './components/emailform';
 
 class App extends Component {
   constructor(props){
@@ -50,23 +51,39 @@ class App extends Component {
       this.setState({submitting:false});
     } 
   }
+  checkIfEmailInString(text) { 
+    var re = /(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+    return re.test(text);
+  }
+
   processSignIn =() =>{
     this.setState({submitting:true},()=>{
       let id = this.state.msalInstance.getAccount(); 
       this.state.user.email=id.userName;
+      if(this.state.email){
+        //if user logged in with a phone or skype and an email had to be entered manually
+        this.state.user.email=this.state.email;
+      }
       this.state.user.name=id.name;
-      //If a code is present then first check code then pre reg
-      let token = this.getQueryVariable("token");
-
-      if(token){      
-        this.state.user.checkCode(token)
-        .then(()=>{      
-          this.preregister();
-        });
+      if(!this.checkIfEmailInString(this.state.user.email)){
+       //if there's no valid email set for the user then ask for an email
+        this.setState({
+          loggedin: true,submitting:false,needemail:true});
       }else{
-        //console.log("no code in qs");
-        this.preregister();
-      }   
+        //If a code is present then first check code then pre reg
+        let token = this.getQueryVariable("token");
+      
+        if(token){      
+          this.state.user.checkCode(token)
+          .then(()=>{      
+              this.preregister();
+          });
+        }else{
+          //console.log("no code in qs");
+          this.preregister();
+        }
+      }
+       
     });
   }
   
@@ -86,6 +103,10 @@ class App extends Component {
         });
       }
   } 
+  updateEmail=(email)=>{
+    this.setState({ email:email, needemail:false});
+    this.processSignIn();
+  }
 
   preregister =() =>{
     this.state.user.getUserID()
@@ -103,7 +124,7 @@ class App extends Component {
     this.setState({unreg:true});
     this.doUserUpdateAndShowSpinner(nUser);  
   }
-
+  
   updateUser=(newUser)=>{
 
     let nUser=this.state.user;
@@ -150,15 +171,18 @@ class App extends Component {
             <div>
               <p align='center'>Please sign in to register:</p>         
               <p align='center'><LoginForm signin={this.signin}/></p>
-            </div>
-            : 
-              this.state.user.active?
-                <UnregForm unregister={this.unregister} />
+            </div>            
+            :
+              this.state.needemail?
+                <EmailForm updateEmail={this.updateEmail}/>
               :
-                this.state.unreg?
-                  <UnregConf />
+                this.state.user.active?
+                  <UnregForm unregister={this.unregister} />
                 :
-                  <RegForm updateUser={this.updateUser} user={this.state.user}
+                  this.state.unreg?
+                    <UnregConf />
+                  :
+                    <RegForm updateUser={this.updateUser} user={this.state.user}
             />
           }
         </div>      
