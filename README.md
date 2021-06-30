@@ -21,10 +21,10 @@ You now completed the first step to register for NurseHack4Health. You will be r
 ![](images/Reg3-4.PNG)
 
 Congratulations! You are now registered for NurseHack4Health. Following the completion of these steps, you will be given information on Info Sessions and Workshops to help you prepare for the Hackathon.
-![](images/Reg4.PNG)
+![](images/Reg3.PNG)
 
 Below you have the itinerary for NurseHack4Health. Additionally, you have a link for any questions you may have.
-![](images/RegistrationDone.PNG)
+![](images/Reg4.PNG)
 
 
 
