@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,useState } from 'react';
 import * as Msal from "msal";
 import {Loader } from 'semantic-ui-react'
 import User from './apis/user';
@@ -8,6 +8,16 @@ import UnregForm from  "./components/unregform"
 import UnregConf from  "./components/unregconf"
 import Survey from './apis/survey';
 import EmailForm from './components/emailform';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal,useIsAuthenticated } from "@azure/msal-react";
+import { loginRequest } from "./authConfig";
+import Button from "react-bootstrap/Button";
+import { SignInButton } from "./components/SignInButton";
+import { SignOutButton } from "./components/SignOutButton";
+import Navbar from "react-bootstrap/Navbar";
+//import React, { useState } from "react";
+//import { PageLayout } from "./components/PageLayout";
+//import { ProfileData } from "./components/ProfileData";
+import { callMsGraph } from "./graph";
 
 class App extends Component {
   constructor(props){
@@ -30,6 +40,40 @@ class App extends Component {
       submitting:true
     }
   }
+
+
+  ProfileContent = () => {
+    const { instance, accounts } = useMsal();
+    const [graphData, setGraphData] = useState(null);
+    const isAuthenticated = useIsAuthenticated();
+   
+    function RequestProfileData() {
+        instance.acquireTokenSilent({
+            ...loginRequest,
+            account: accounts[0]
+        }).then((response) => {
+            callMsGraph(response.accessToken).then(response => setGraphData(response));
+            //console.log(response);
+        });
+        
+    }
+
+    return (
+        <>
+            <h5 className="card-title">Welcome</h5>
+            {graphData ? 
+                <UnregConf />
+                :
+                //<Button variant="secondary" onClick={useIsAuthenticated} >test</Button>
+                <Navbar bg="primary" variant="dark">
+                <a className="navbar-brand" href="/">Microsoft Identity Platform</a>
+                { isAuthenticated ? <SignOutButton /> : <SignInButton /> }
+            </Navbar>
+
+            }
+        </>
+    );
+};
 
   getQueryVariable = (variable) => {
     var query = window.location.search.substring(1);
@@ -168,7 +212,7 @@ class App extends Component {
       :
         <div >        
           {!this.state.loggedin?
-            <LoginForm signin={this.signin}/>
+            <this.ProfileContent />
             :
               this.state.needemail?
                 <EmailForm updateEmail={this.updateEmail}/>

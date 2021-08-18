@@ -3,13 +3,19 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { MsalProvider } from "@azure/msal-react";
+import { msalConfig } from "./authConfig";
+import { PublicClientApplication } from "@azure/msal-browser";
+const msalInstance = new PublicClientApplication(msalConfig);
 
 ReactDOM.render(
   <React.StrictMode>
   
     <div className="ui container">
           <div className="ui segment">
-            <App/>
+          <MsalProvider instance={msalInstance}>
+            <App />
+        </MsalProvider>
           </div>       
     </div>
    
