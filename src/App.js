@@ -93,7 +93,7 @@ class App extends Component {
         .catch(error => {        
           this.state.msalInstance.acquireTokenRedirect({
             ...userReq,
-            redirectUri: "https://apps.nursehack4health.org/Registration"
+            redirectUri: "https://apps.nursehack4health.org/Registration/"
         })
       });
       // --- End Get Token
