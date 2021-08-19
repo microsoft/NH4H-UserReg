@@ -1,4 +1,4 @@
-import nh4h from './nh4h';
+import axios from "axios";
 
 class User {
   static APIURL='/users/';  
@@ -28,6 +28,7 @@ class User {
   jnjnewsletter;
   sonsielnewsletter;
   msftnewsletter;
+  nh4h;
 
   constructor(){
     this.userid=false;
@@ -37,13 +38,26 @@ class User {
     this.optin=false;
   }
 
+  setAuthToken = (token) => {
+      this.nh4h = axios.create({
+        baseURL: 'https://hackapi-v2.azurewebsites.net/api',
+        headers: {
+          common:{
+            'content-type':'application/json',
+          },
+          'Authorization':`Bearer ${token}`,
+        }
+      });
+  }
+  
+
   /**
     * sets user id, preregisters user if needed
     */
   getUserID = () => {
     let body = {};
     body[User.REGEMAIL] = this.email ;
-    return nh4h.post(User.APIURL+'regemail', body)
+    return this.nh4h.post(User.APIURL+'regemail', body)
       .then((response) => {
         
         if(response.data.returnError){            
@@ -71,8 +85,8 @@ class User {
 
   preRegister=()=>{
     //circuit breaker to prevent infinite loops
-    if(this.attemptedPreReg) {return;}
-      nh4h.post(User.APIURL, this.getUserBody())
+    if(this.attemptedPreReg) {return;}      
+      this.nh4h.post(User.APIURL, this.getUserBody())
       .then((response)=>{
         if(response.data.returnError){
           this.attemptedPreReg=true;
@@ -89,7 +103,7 @@ class User {
 
   updateUser=()=>{
     
-        return    nh4h.put(User.APIURL+this.userid, this.getUserBody())
+        return this.nh4h.put(User.APIURL+this.userid, this.getUserBody())
             
             .catch(err => {
               
@@ -102,7 +116,7 @@ class User {
         UsedByEmail:this.email,
         UniqueCode:otccode
      };
-    return nh4h.post(User.APICODEURL,body)
+    return this.nh4h.post(User.APICODEURL,body)
       .then((response)=>{
         if(!response.data.returnError){
 //           console.log("Code valid. Role "+response.data);
