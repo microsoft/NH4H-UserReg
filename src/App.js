@@ -8,16 +8,9 @@ import UnregForm from  "./components/unregform"
 import UnregConf from  "./components/unregconf"
 import Survey from './apis/survey';
 import EmailForm from './components/emailform';
-import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal,useIsAuthenticated } from "@azure/msal-react";
-import { loginRequest } from "./authConfig";
-import Button from "react-bootstrap/Button";
-import { SignInButton } from "./components/SignInButton";
-import { SignOutButton } from "./components/SignOutButton";
-import Navbar from "react-bootstrap/Navbar";
 //import React, { useState } from "react";
 //import { PageLayout } from "./components/PageLayout";
 //import { ProfileData } from "./components/ProfileData";
-import { callMsGraph } from "./graph";
 
 class App extends Component {
   constructor(props){
@@ -37,52 +30,16 @@ class App extends Component {
       loggedin: false,
       unreg: false,
       survey: new Survey(),
-      submitting:true
+      submitting:true,
+      apiScope:"api://05fc1a93-6c0e-4af6-9424-368474961462/user_impersonation"
     }
   }
 
-
-  ProfileContent = () => {
-    const { instance, accounts } = useMsal();
-    const [graphData, setGraphData] = useState(null);
-    const isAuthenticated = useIsAuthenticated();
-   
-    function RequestProfileData() {
-        instance.acquireTokenSilent({
-            ...loginRequest,
-            account: accounts[0]
-        }).then((response) => {
-            callMsGraph(response.accessToken).then(response => setGraphData(response));
-            //console.log(response);
-        });
-        
-    }
-
-    return (
-        <>
-            <h5 className="card-title">Welcome</h5>
-            {graphData ? 
-                <UnregConf />
-                :
-                //<Button variant="secondary" onClick={useIsAuthenticated} >test</Button>
-                <Navbar bg="primary" variant="dark">
-                <a className="navbar-brand" href="/">Microsoft Identity Platform</a>
-                { isAuthenticated ? <SignOutButton /> : <SignInButton /> }
-            </Navbar>
-
-            }
-        </>
-    );
-};
-
   getQueryVariable = (variable) => {
     var query = window.location.search.substring(1);
-    //console.log(query)//"token1=123&token2=456&token3=789"
     var vars = query.split("&");
-    //console.log(vars) //[ 'token1=123', 'token2=456', 'token3=789' ]
     for (var i=0;i<vars.length;i++) {
       var pair = vars[i].split("=");
-      //console.log(pair)//[ 'token1', '123' ][ 'token2', '456' ][ 'token3', '789' ] 
       if(pair[0] == variable){return pair[1];}
     }
     return(false);
@@ -100,33 +57,53 @@ class App extends Component {
     return re.test(text);
   }
 
+  getAccessToken =(authResp) => {
+    this.state.user.setAuthToken(authResp.accessToken);
+    if(!this.checkIfEmailInString(this.state.user.email)){
+      //if there's no valid email set for the user then ask for an email
+       this.setState({
+         loggedin: true,submitting:false,needemail:true});
+     }else{
+       //If a code is present then first check code then pre reg
+       let token = this.getQueryVariable("token");
+     
+       if(token){      
+         this.state.user.checkCode(token)
+         .then(()=>{      
+             this.preregister();
+         });
+       }else{
+         this.preregister();
+       }
+     }
+  }
+
   processSignIn =() =>{
     this.setState({submitting:true},()=>{
       let id = this.state.msalInstance.getAccount(); 
       this.state.user.email=id.userName;
+      
+      let userReq = {
+        scopes: [this.state.apiScope] 
+      };      
+
+      // Get token for HackAPI ---
+      this.state.msalInstance.acquireTokenSilent(userReq)
+        .then((resp) => this.getAccessToken(resp))
+        .catch(error => {        
+          this.state.msalInstance.acquireTokenRedirect({
+            ...userReq,
+            redirectUri: "http://localhost:3000"
+        })
+      });
+      // --- End Get Token
+
       if(this.state.email){
         //if user logged in with a phone or skype and an email had to be entered manually
         this.state.user.email=this.state.email;
       }
       this.state.user.name=id.name;
-      if(!this.checkIfEmailInString(this.state.user.email)){
-       //if there's no valid email set for the user then ask for an email
-        this.setState({
-          loggedin: true,submitting:false,needemail:true});
-      }else{
-        //If a code is present then first check code then pre reg
-        let token = this.getQueryVariable("token");
-      
-        if(token){      
-          this.state.user.checkCode(token)
-          .then(()=>{      
-              this.preregister();
-          });
-        }else{
-          //console.log("no code in qs");
-          this.preregister();
-        }
-      }
+
        
     });
   }
@@ -212,7 +189,7 @@ class App extends Component {
       :
         <div >        
           {!this.state.loggedin?
-            <this.ProfileContent />
+            <LoginForm signin={this.signin}/>
             :
               this.state.needemail?
                 <EmailForm updateEmail={this.updateEmail}/>

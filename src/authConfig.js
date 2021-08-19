@@ -50,7 +50,7 @@ export const msalConfig = {
   By default, MSAL.js will add OIDC scopes (openid, profile, email) to any login request.
  */
 export const loginRequest = {
-    scopes: ["User.Read"]
+    scopes: ["User.Read","api://05fc1a93-6c0e-4af6-9424-368474961462/user_impersonation"]
 };
 
 /**
