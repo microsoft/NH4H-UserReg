@@ -100,10 +100,6 @@ class RegForm extends React.Component {
           <Grid.Column > 
          
           <Header >
-          <div>
-          <Image src='/logo.png' size="massive"></Image>
-          </div>
-          
           <br></br>
           <br></br>
             Registration
