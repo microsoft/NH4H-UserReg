@@ -1,0 +1,272 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_ProcessRegData_name": {
+            "defaultValue": "ProcessRegData",
+            "type": "String"
+        },
+        "connections_keyvault_externalid": {
+            "defaultValue": "/subscriptions/96d816cf-e34a-48a3-af79-12e4f496010e/resourceGroups/rg-NH4H/providers/Microsoft.Web/connections/keyvault",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_ProcessRegData_name')]",
+            "location": "eastus",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        },
+                        "Audience": {
+                            "defaultValue": "api://05acec15-d6fb-4dae-a9b3-5886a7709df9",
+                            "type": "String"
+                        },
+                        "Authority": {
+                            "defaultValue": "https://login.microsoftonline.com",
+                            "type": "String"
+                        },
+                        "ClientId": {
+                            "defaultValue": "5d65c64f-9baf-4e6b-9fe5-aa637e813ed8",
+                            "type": "String"
+                        },
+                        "HackAPI": {
+                            "defaultValue": "https://hackapi-tax6y5voqibmw.azurewebsites.net",
+                            "type": "String"
+                        },
+                        "Tenant": {
+                            "defaultValue": "f3dbb474-15ef-4465-a3a1-fff0e4c8146b",
+                            "type": "String"
+                        }
+                    },
+                    "triggers": {
+                        "manual": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                                "schema": {
+                                    "properties": {
+                                        "Active": {
+                                            "type": "boolean"
+                                        },
+                                        "JNJOptIn": {
+                                            "type": "boolean"
+                                        },
+                                        "MSFTOptIn": {
+                                            "type": "boolean"
+                                        },
+                                        "SONSIELOptIn": {
+                                            "type": "boolean"
+                                        },
+                                        "UserDisplayName": {
+                                            "type": "string"
+                                        },
+                                        "UserMSTeamsEmail": {
+                                            "type": "string"
+                                        },
+                                        "UserSkill": {
+                                            "type": "string"
+                                        },
+                                        "UserTimeCommitment": {
+                                            "type": "string"
+                                        },
+                                        "userOptOut": {
+                                            "type": "boolean"
+                                        },
+                                        "userRegEmail": {
+                                            "type": "string"
+                                        },
+                                        "userRole": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "Condition": {
+                            "actions": {
+                                "HackAPI-UpdateUser": {
+                                    "runAfter": {
+                                        "Parse_User": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "authentication": {
+                                            "audience": "@parameters('Audience')",
+                                            "authority": "@parameters('Authority')",
+                                            "clientId": "@parameters('ClientId')",
+                                            "secret": "@body('Get_Auth_Client_Secret')?['value']",
+                                            "tenant": "@parameters('Tenant')",
+                                            "type": "ActiveDirectoryOAuth"
+                                        },
+                                        "body": "@triggerBody()",
+                                        "method": "PUT",
+                                        "uri": "@{concat(parameters('HackAPI'), '/api/users/', body('Parse_User')?['userId'])}"
+                                    }
+                                },
+                                "Parse_User": {
+                                    "runAfter": {},
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('HackAPI-AddUser')",
+                                        "schema": {
+                                            "properties": {
+                                                "active": {
+                                                    "type": "boolean"
+                                                },
+                                                "adUserId": {},
+                                                "createdBy": {},
+                                                "createdDate": {
+                                                    "type": "string"
+                                                },
+                                                "gitHubId": {
+                                                    "type": "integer"
+                                                },
+                                                "gitHubUser": {},
+                                                "jnjOptIn": {
+                                                    "type": "boolean"
+                                                },
+                                                "mailchimpId": {},
+                                                "modifiedBy": {},
+                                                "modifiedDate": {
+                                                    "type": "string"
+                                                },
+                                                "msftOptIn": {
+                                                    "type": "boolean"
+                                                },
+                                                "mySkills": {},
+                                                "sonsielOptIn": {
+                                                    "type": "boolean"
+                                                },
+                                                "tblTeamHackers": {
+                                                    "type": "array"
+                                                },
+                                                "tblUserSkillMatch": {
+                                                    "type": "array"
+                                                },
+                                                "userDisplayName": {
+                                                    "type": "string"
+                                                },
+                                                "userId": {
+                                                    "type": "integer"
+                                                },
+                                                "userMSTeamsEmail": {
+                                                    "type": "string"
+                                                },
+                                                "userOptOut": {
+                                                    "type": "boolean"
+                                                },
+                                                "userRegEmail": {
+                                                    "type": "string"
+                                                },
+                                                "userRole": {
+                                                    "type": "string"
+                                                },
+                                                "userTimeCommitment": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "HackAPI-AddUser": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "equals": [
+                                            "@outputs('HackAPI-AddUser')['statusCode']",
+                                            200
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        },
+                        "Get_Auth_Client_Secret": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['keyvault']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/secrets/@{encodeURIComponent('LogicAppClientSecret')}/value"
+                            }
+                        },
+                        "HackAPI-AddUser": {
+                            "runAfter": {
+                                "Get_Auth_Client_Secret": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "authentication": {
+                                    "audience": "@parameters('Audience')",
+                                    "authority": "@parameters('Authority')",
+                                    "clientId": "@parameters('ClientId')",
+                                    "secret": "@body('Get_Auth_Client_Secret')?['value']",
+                                    "tenant": "@parameters('Tenant')",
+                                    "type": "ActiveDirectoryOAuth"
+                                },
+                                "body": "@triggerBody()",
+                                "method": "POST",
+                                "uri": "@{concat(parameters('HackAPI'),'/api/users')}"
+                            }
+                        },
+                        "Response": {
+                            "runAfter": {
+                                "Condition": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Response",
+                            "kind": "Http",
+                            "inputs": {
+                                "statusCode": 200
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "keyvault": {
+                                "connectionId": "[parameters('connections_keyvault_externalid')]",
+                                "connectionName": "keyvault",
+                                "id": "/subscriptions/96d816cf-e34a-48a3-af79-12e4f496010e/providers/Microsoft.Web/locations/eastus/managedApis/keyvault"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

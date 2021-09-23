@@ -1,5 +1,5 @@
 import React from 'react';
-import {Header, Button, Form, Input } from 'semantic-ui-react'
+import {Header, Button, Form, Input,Grid,Image} from 'semantic-ui-react'
 
 
 
@@ -42,11 +42,23 @@ class EmailForm extends React.Component {
   render() {
    
     return(
-      <div>
-          <Header as='h2'>
-            You'll need to supply an email address
-          </Header>               
+      <Grid textAlign='left'  verticalAlign='middle' style={{ maxWidth: 450 }}>
+          <Grid.Column > 
          
+          <Header >
+          <div>
+          <Image src='/logo.png' size="massive"></Image>
+          </div>
+          
+          <br></br>
+          <br></br>
+          You'll need to supply an email address
+      
+       
+    
+          </Header>               
+          <br></br>
+      
           <Form error={this.state.RegError}> 
           
 
@@ -64,9 +76,16 @@ class EmailForm extends React.Component {
             <Button disabled={!this.state.formvalid} onClick={this.handleSubmit} type='submit'>Continue</Button>
 
           </Form>
-        </div>
+        
+  
+         
+          </Grid.Column>
+          </Grid>
     );
   }
 }
 
 export default EmailForm;
+
+
+

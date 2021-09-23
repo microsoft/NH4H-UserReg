@@ -1,0 +1,97 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_ProcessRegHacker_name": {
+            "defaultValue": "ProcessRegHacker",
+            "type": "String"
+        },
+        "workflows_ProcessRegData_externalid": {
+            "defaultValue": "/subscriptions/96d816cf-e34a-48a3-af79-12e4f496010e/resourceGroups/rg-NH4H/providers/Microsoft.Logic/workflows/ProcessRegData",
+            "type": "String"
+        },
+        "connections_jotform_externalid": {
+            "defaultValue": "/subscriptions/96d816cf-e34a-48a3-af79-12e4f496010e/resourceGroups/rg-NH4H/providers/Microsoft.Web/connections/jotform",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_ProcessRegHacker_name')]",
+            "location": "eastus",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "When_a_response_is_submitted": {
+                            "type": "ApiConnectionWebhook",
+                            "inputs": {
+                                "body": {
+                                    "Form_ID": "212293217273351",
+                                    "format": [
+                                        "HTML"
+                                    ],
+                                    "url": "@{listCallbackUrl()}"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['jotform']['connectionId']"
+                                    }
+                                },
+                                "path": "/webhook"
+                            }
+                        }
+                    },
+                    "actions": {
+                        "ProcessRegData": {
+                            "runAfter": {},
+                            "type": "Workflow",
+                            "inputs": {
+                                "body": {
+                                    "Active": true,
+                                    "JNJOptIn": false,
+                                    "MSFTOptIn": false,
+                                    "SONSIELOptIn": false,
+                                    "UserDisplayName": "@triggerBody()?['04 - Name']",
+                                    "UserMSTeamsEmail": "@triggerBody()?['05 - Email address ']",
+                                    "userOptOut": false,
+                                    "userRegEmail": "@triggerBody()?['05 - Email address ']",
+                                    "userRole": "Hacker"
+                                },
+                                "host": {
+                                    "triggerName": "manual",
+                                    "workflow": {
+                                        "id": "[parameters('workflows_ProcessRegData_externalid')]"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "jotform": {
+                                "connectionId": "[parameters('connections_jotform_externalid')]",
+                                "connectionName": "jotform",
+                                "id": "/subscriptions/96d816cf-e34a-48a3-af79-12e4f496010e/providers/Microsoft.Web/locations/eastus/managedApis/jotform"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

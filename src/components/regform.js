@@ -1,5 +1,5 @@
 import React from 'react';
-import {Header, Loader, Message, Button, Checkbox, Form, Select, Input } from 'semantic-ui-react'
+import {Header, Loader, Message, Button, Checkbox, Form, Select, Input,Container, Grid,Image} from 'semantic-ui-react'
 import { findAllByTestId } from '@testing-library/react';
 
 
@@ -95,14 +95,26 @@ class RegForm extends React.Component {
         <div>
           <Loader active inline='centered' />
         </div>:
-        <div >
-          <Header as='h2'>
+        
+          <Grid textAlign='left'  verticalAlign='middle' style={{ maxWidth: 450 }}>
+          <Grid.Column > 
+         
+          <Header >
+          <br></br>
+          <br></br>
             Registration
+      
+       
+    
             <Header.Subheader>
                 You must fill in this form to register.
             </Header.Subheader>
           </Header>               
           <br></br>
+      
+          
+        
+  
           <Form error={this.state.RegError}> 
 
             <Message
@@ -115,7 +127,7 @@ class RegForm extends React.Component {
               <Form.Field required>
                 <label>Email (Will be used to log into Microsoft Teams.  Only change this if you use a different email address to log into Microsoft Teams)</label>
                 <Form.Group inline>            
-                  <Form.Field error={this.state.RegError}
+                  <Form.Field  error={this.state.RegError}
                     required
                     name='email'                    
                     control={Input} 
@@ -123,9 +135,9 @@ class RegForm extends React.Component {
                     value={this.state.email}  
                     disabled={!this.state.allowemailchange}                                          
                   />
-                  <Form.Field
+                  <Form.Button positive
                     name='changeemail'
-                    control={Button}  
+                   // control={Button}  
                     content='Change'
                     onClick={this.handleChangeClick}              
                   />
@@ -136,12 +148,13 @@ class RegForm extends React.Component {
             <Form.Group >               
               <Form.Field required>
                 <label>How would you like your name displayed? If you are a current Office 365/Teams user, your display name may reflect that name.</label>
-                <Form.Field error={this.state.RegError}
+                <Form.Field fluid icon='user' error={this.state.RegError}
                     required
                     name='displayname'
                     control={Input}
                     onChange={ this.handleChange } 
-                    value={this.state.displayname}          
+                    value={this.state.displayname}     
+                    width="8"     
                 />  
             </Form.Field>
             </Form.Group> 
@@ -171,10 +184,12 @@ class RegForm extends React.Component {
             />
                   
             <br></br><br></br>
-            <Button onClick={this.handleSubmit} type='submit'>Register</Button>
+            <Button primary onClick={this.handleSubmit} type='submit'>Register</Button>
 
           </Form>
-        </div>
+          </Grid.Column>
+          </Grid>
+        
     )
   }
 }

@@ -1,4 +1,4 @@
-import nh4h from './nh4h';
+import axios from "axios";
 
 class Survey {
   static APIURL='/survey/';
@@ -19,15 +19,28 @@ class Survey {
   ethnicity;
   expertise;
   student;
+  nh4h;
 
   constructor(){
     
   }
 
+  setAuthToken=(token)=>{
+    this.nh4h = axios.create({
+      baseURL: 'https://hackapi-v2.azurewebsites.net/api',
+      headers: {
+        common:{
+          'content-type':'application/json',
+        },
+        'Authorization':`Bearer ${token}`,
+      }
+    });
+  }
+
   updateSurvey=()=>{
   
 //TODO: FIX API Error
-    return    nh4h.post(Survey.APIURL, this.getSurveyBody())
+    return    this.nh4h.post(Survey.APIURL, this.getSurveyBody())
         .catch(err => {
           console.error(err);
         });      
